@@ -1,0 +1,47 @@
+pipeline {
+# devops training
+
+    agent any 
+
+
+    stages {
+        stage('build') {
+            steps {
+                echo 'Building the code..'
+                sh "mvn -version"
+		sh "mvn clean"
+            }
+        }
+
+
+        stage('Test') {
+            steps {
+                echo 'Testing the code...'
+                sh "mvnw test"
+            }
+        }
+        stage('compile') {
+            steps {
+                echo 'Compiling the code...'
+                sh "mvnw compile"
+            }
+        }
+
+        stage('package') {
+            steps {
+                echo 'Packing the code...'
+                sh "mvnw package"
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to project code Environment...'
+                // Use credentials for secure deployment
+                // withCredentials([string(credentialsId: 'API_KEY', variable: 'KEY')]) { ... }
+ansibleplaybook credentialsid : 'sdssd-dasda-dasdsa-dasda', disablehostkeychecking: true, installation: 'ansible', inventory : 'dev.inv' , playbook: 'ply.yml' , sudouser: null
+            }
+        }
+    }
+
+  }
